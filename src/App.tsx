@@ -1,27 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Match} from "./model/Match";
-import {getMatchesFromApi} from "./api/ApiCall";
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import Home from "./pages/Home";
+import Matches from "./pages/Matches";
+import Matches2 from "./pages/Matches2";
 
 function App() {
   const [matches, setMatches] = useState<Array<Match>>([]);
-  useEffect(() => {
-    if (matches.length === 0) {
-      getMatchesFromApi(2021)
-          .then(matches => setMatches(matches))
-    }
-  }, [matches, setMatches]);
   return (
     <div className="App">
-      <ul>
-        {matches.map((match, index) => {
-          return (
-              <li key={index}>
-                <p>{match.homeTeam.name}&nbsp;-&nbsp;{match.awayTeam.name}</p>
-              </li>
-          );
-        })}
-      </ul>
+      <BrowserRouter>
+        <Link to="/">Home</Link><br/>
+        <Link to="/matches">Matches</Link><br/>
+        <Link to="/matches2">Matches2</Link><br/>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/matches" element={<Matches matches={matches} setMatches={setMatches}/>}/>
+          <Route path="/matches2" element={<Matches2 matches={matches} setMatches={setMatches}/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
