@@ -1,14 +1,16 @@
 import {Match, MatchesResponse} from "../model/Match";
-import {footballDataKey} from "../secrets/Key";
 import {plainToClass} from "class-transformer";
 
+const {REACT_APP_FOOTBALL_API_KEY} = process.env;
 export async function getMatchesFromApi(competitionId: number): Promise<Array<Match>> {
+    if (!REACT_APP_FOOTBALL_API_KEY) {
+        // You can just register on api.football-data.org to generate your own free key.
+        throw new Error("Please put your own key in the .env.local file as REACT_APP_FOOTBALL_API_KEY value");
+    }
     const fetchOptions: RequestInit = {
         method: 'GET',
         headers: {
-            // Just a String in a file I filtered in the .gitignore because I don't want my key to leak.
-            // You can just register on api.football-data.org to generate your own free key.
-            'X-Auth-Token': footballDataKey
+            'X-Auth-Token': REACT_APP_FOOTBALL_API_KEY
         }
     };
 
