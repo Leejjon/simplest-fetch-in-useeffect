@@ -15,8 +15,8 @@ function App() {
         <Link to="/matches2">Matches2</Link><br/>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/matches" element={<Matches />} loader={ async () => { await getMatchesFromApi(2021)} } />
-          <Route path="/matches2" element={<Matches2 />} loader={ async () => { await getMatchesFromApi(2021)} } />
+          <Route path="/matches" element={<Matches />} loader={ async () => { return await getMatchesFromApi(2021)} } />
+          <Route path="/matches2" element={<Matches2 />} loader={ async () => { return await getMatchesFromApi(2021)} } />
         </Routes>
       </BrowserRouter>
     </div>
