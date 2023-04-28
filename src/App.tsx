@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import {Match} from "./model/Match";
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Matches from "./pages/Matches";
 import Matches2 from "./pages/Matches2";
+import {getMatchesFromApi} from "./api/ApiCall";
 
 function App() {
-  const [matches, setMatches] = useState<Array<Match>>([]);
   return (
     <div className="App">
       <BrowserRouter>
@@ -16,8 +15,8 @@ function App() {
         <Link to="/matches2">Matches2</Link><br/>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/matches" element={<Matches matches={matches} setMatches={setMatches}/>}/>
-          <Route path="/matches2" element={<Matches2 matches={matches} setMatches={setMatches}/>}/>
+          <Route path="/matches" element={<Matches />} loader={ async () => { await getMatchesFromApi(2021)} } />
+          <Route path="/matches2" element={<Matches2 />} loader={ async () => { await getMatchesFromApi(2021)} } />
         </Routes>
       </BrowserRouter>
     </div>

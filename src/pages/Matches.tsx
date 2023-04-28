@@ -1,19 +1,9 @@
 import {Match} from "../model/Match";
-import React, {useEffect} from "react";
-import {getMatchesFromApi} from "../api/ApiCall";
+import React from "react";
+import {useLoaderData} from "react-router-dom";
 
-export interface MatchesProps {
-    matches: Array<Match>;
-    setMatches: (matches: Array<Match>) => void;
-}
-
-function Matches({matches, setMatches}: MatchesProps) {
-    useEffect(() => {
-        if (matches.length === 0) {
-            getMatchesFromApi(2021)
-                .then(matches => setMatches(matches))
-        }
-    }, [matches, setMatches]);
+function Matches() {
+    const matches: Array<Match> = useLoaderData() as Array<Match>;
 
     return (
         <ul>
