@@ -2,6 +2,7 @@ import {Match, MatchesResponse} from "../model/Match";
 import {plainToClass} from "class-transformer";
 
 const {REACT_APP_FOOTBALL_API_KEY} = process.env;
+
 export async function getMatchesFromApi(competitionId: number): Promise<Array<Match>> {
     if (!REACT_APP_FOOTBALL_API_KEY) {
         // You can just register on api.football-data.org to generate your own free key.

@@ -7,6 +7,21 @@ import App from "./App";
 import Matches from "./pages/Matches";
 import Matches2 from "./pages/Matches2";
 import {getMatchesFromApi} from "./api/ApiCall";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {Match} from "./model/Match";
+
+const queryClient = new QueryClient();
+
+export const matchesQuery = () => (
+    {
+        queryKey: ["competitions"],
+        queryFn: async () => { return await getMatchesFromApi(2021)},
+    }
+);
+
+const matchesQueryLoader = async (queryClient: QueryClient): Promise<Array<Match>> => {
+    return await queryClient.ensureQueryData(matchesQuery());
+};
 
 const router = createBrowserRouter([
     {
@@ -16,12 +31,12 @@ const router = createBrowserRouter([
             {
                 path: "/matches",
                 element: <Matches/>,
-                loader: async () => { return await getMatchesFromApi(2021)}
+                loader: async () => { return matchesQueryLoader(queryClient) }
             },
             {
                 path: "/matches2",
                 element: <Matches2 />,
-                loader: async () => { return await getMatchesFromApi(2021)}
+                loader: async () => { return matchesQueryLoader(queryClient)}
             }
         ]
     }
@@ -33,7 +48,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
   </React.StrictMode>
 );
 
