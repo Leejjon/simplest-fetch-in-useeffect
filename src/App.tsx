@@ -1,27 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Match} from "./model/Match";
-import {getMatchesFromApi} from "./api/ApiCall";
+import {matchesQuery} from "./index";
+import {useQuery} from "@tanstack/react-query";
 
 function App() {
-  const [matches, setMatches] = useState<Array<Match>>([]);
-  useEffect(() => {
-    if (matches.length === 0) {
-      getMatchesFromApi(2021)
-          .then(matches => setMatches(matches))
-    }
-  }, [matches, setMatches]);
+  const {data} = useQuery({
+    ...matchesQuery(),
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    cacheTime: 5000,
+    staleTime: 4000,
+    retry: false,
+  });
+  const matches: Array<Match> = data ?? [];
   return (
     <div className="App">
-      <ul>
-        {matches.map((match, index) => {
-          return (
-              <li key={index}>
-                <p>{match.homeTeam.name}&nbsp;-&nbsp;{match.awayTeam.name}</p>
-              </li>
-          );
-        })}
-      </ul>
+
+        <ul>
+          {matches.map((match, index) => {
+            return (
+                <li key={index}>
+                  <p>{match.homeTeam.name}&nbsp;-&nbsp;{match.awayTeam.name}</p>
+                </li>
+            );
+          })}
+        </ul>
     </div>
   );
 }
