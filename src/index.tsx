@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 
 export const matchesQuery = () => (
     {
-        queryKey: ["competitions"],
+        queryKey: ["matches"],
         queryFn: async () => { return await getMatchesFromApi(2021)},
     }
 );
