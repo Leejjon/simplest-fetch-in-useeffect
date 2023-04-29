@@ -15,11 +15,6 @@ function Matches() {
     });
     const matches: Array<Match> = data ?? [];
 
-    const navigation = useNavigation();
-    useEffect(() => {
-        console.log(navigation.location);
-    }, [navigation]);
-
     return (
         <ul>
             {matches.map((match, index) => {
