@@ -1,8 +1,7 @@
 import {Match} from "../model/Match";
-import React, {useEffect} from "react";
+import React from "react";
 import {useQuery} from "@tanstack/react-query";
 import {matchesQuery} from "../index";
-import {useNavigation} from "react-router-dom";
 
 function Matches() {
     const {data} = useQuery({
