@@ -7,12 +7,17 @@ import App from "./App";
 import Matches from "./pages/Matches";
 import Matches2 from "./pages/Matches2";
 import {getMatchesFromApi} from "./api/ApiCall";
+import Home from "./pages/Home";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
         children: [
+            {
+                index: true,
+                element: <Home/>
+            },
             {
                 path: "/matches",
                 element: <Matches/>,
