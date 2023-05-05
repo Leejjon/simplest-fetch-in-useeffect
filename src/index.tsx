@@ -9,6 +9,7 @@ import Matches2 from "./pages/Matches2";
 import {getMatchesFromApi} from "./api/ApiCall";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Match} from "./model/Match";
+import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <App/>,
         children: [
+            {
+                index: true,
+                element: <Home/>
+            },
             {
                 path: "/matches",
                 element: <Matches/>,
