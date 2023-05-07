@@ -1,19 +1,30 @@
 import {Match} from "../model/Match";
 import React, {useEffect} from "react";
 import {getMatchesFromApi} from "../api/ApiCall";
+import {ErrorProps} from "../App";
 
 export interface MatchesProps {
     matches: Array<Match>;
     setMatches: (matches: Array<Match>) => void;
 }
 
-function Matches({matches, setMatches}: MatchesProps) {
+function Matches({matches, setMatches, error, setError}: MatchesProps & ErrorProps) {
     useEffect(() => {
         if (matches.length === 0) {
             getMatchesFromApi(2021)
-                .then(matches => setMatches(matches))
+                .then(matches => {
+                    setMatches(matches);
+                    setError(undefined);
+                })
+                .catch((e) => setError("Could not fetch the matches."));
         }
-    }, [matches, setMatches]);
+    }, [matches, setMatches, setError]);
+
+    if (error) {
+        return (
+            <div className="App">{error}</div>
+        );
+    }
 
     return (
         <ul>
