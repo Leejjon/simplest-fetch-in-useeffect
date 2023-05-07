@@ -2,7 +2,6 @@
   "name": "simplest-fetch-in-useffect",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://api.football-data.org/",
   "dependencies": {
     "@tanstack/react-query": "^4.29.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -44,5 +43,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "options": {
+    "allowedHosts": ["localhost"],
+    "proxy": "https://api.football-data.org/"
   }
 }
