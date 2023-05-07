@@ -15,7 +15,7 @@ function App() {
           })
           .catch((e) => setError("Could not fetch the matches."));
     }
-  }, [matches, setMatches]);
+  }, [matches, setMatches, setError]);
   if (error) {
     return (
         <div className="App">{error}</div>
