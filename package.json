@@ -44,8 +44,8 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://api.football-data.org/",
   "options": {
-    "allowedHosts": ["localhost"],
-    "proxy": "https://api.football-data.org/"
+    "allowedHosts": ["localhost"]
   }
 }
