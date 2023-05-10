@@ -1,28 +1,18 @@
 import {Match} from "../model/Match";
-import React, {useEffect} from "react";
-import {getMatchesFromApi} from "../api/ApiCall";
-import {ErrorProps} from "../App";
+import React from "react";
+import {useQuery} from "@tanstack/react-query";
+import {matchesQuery} from "../queries/MatchesQuery";
 
-export interface MatchesProps {
-    matches: Array<Match>;
-    setMatches: (matches: Array<Match>) => void;
-}
+function Matches2() {
+    const {data, isError, isPaused} = useQuery({
+        ...matchesQuery()
+    });
+    const matches: Array<Match> = data ?? [];
 
-function Matches2({matches, setMatches, error, setError}: MatchesProps & ErrorProps) {
-    useEffect(() => {
-        if (matches.length === 0) {
-            getMatchesFromApi(2021)
-                .then(matches => {
-                    setMatches(matches);
-                    setError(undefined);
-                })
-                .catch((e) => setError("Could not fetch the matches."));
-        }
-    }, [matches, setMatches, setError]);
-
-    if (error) {
+    // We use isPaused because if there is no internet react query will be paused automatically.
+    if (isError || isPaused) {
         return (
-            <div className="App">{error}</div>
+            <div className="App">Could not load matches.</div>
         );
     }
 
