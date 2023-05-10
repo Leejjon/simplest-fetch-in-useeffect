@@ -36,11 +36,14 @@ const router = createBrowserRouter([
             {
                 path: "/matches",
                 element: <Matches/>,
+                // If there is an error in the loader, load the page anyway because it can render without data.
+                errorElement: <Matches/>,
                 loader: async () => { return matchesQueryLoader(queryClient) }
             },
             {
                 path: "/matches2",
                 element: <Matches2 />,
+                errorElement: <Matches2 />,
                 loader: async () => { return matchesQueryLoader(queryClient)}
             }
         ]
